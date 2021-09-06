@@ -5,6 +5,18 @@ const getLaunchInfo = async() =>{
         console.log("Mission Info")
         console.log(res.data.date_utc)
 
+
+        // console.log()
+        // console.log("GOING TO PRINT CORE ID")
+        // console.log(res.data.cores[0].core)
+        // // console.log(res.data.cores.core)
+        // // console.log(res.data.cores[0].core)
+        // console.log("DONE PRINTING CORE INFO")
+        // console.log()
+
+
+
+
         countDown(res.data.date_unix); // Countdown to next launch
 
         const rocketInfo = await getRocketInfo(res.data.rocket) // pass in rocket id
@@ -26,11 +38,10 @@ const getLaunchInfo = async() =>{
 
         // Need to do try catch, if core is new may not have any id and gives error
         try {
-            coreInfo = await getCoreInfo(res.data.core) // Gets core id from launch data
+            coreInfo = await getCoreInfo(res.data.cores[0].core) // Gets core id from launch data
         }catch (e) {
             console.log("error: " + e)
         }
-
         console.log("Core Info")
         console.log(coreInfo)
         console.log()
@@ -132,7 +143,9 @@ function displayPadInfo(data){
 const getCoreInfo = async(id) =>{
     try{
         const core = await axios.get('https://api.spacexdata.com/v4/cores/' + id); // Get info on core
-
+        console.log()
+        console.log("core id inside get core info  " +core.id)
+        console.log()
         return(core.data)
     }catch(e){
         console.log("error " + e)
@@ -144,6 +157,7 @@ const getCoreInfo = async(id) =>{
 const getPastLaunch = async(id) =>{
     try{
         console.log("IN THE GETTING PAST LAUNCH INFO PART")
+        console.log("GETTING ID " + id)
         const past = await axios.get('https://api.spacexdata.com/v5/launches/' + id); // Get info on core
         console.log("Past Launch Info")
         console.log(past.data)
@@ -163,7 +177,7 @@ async function createTable(core) {
 
     // If a core hasn't flown before it may give an error
     try {
-        numLaunches = core.reuse_count; // Number of launches for this core
+        numLaunches = core.launches.length; // Number of launches for this core
     }catch (e) {
         numLaunches = 0; // If there's an error core likely never flew before, set launches as 0
         console.log("error: " + e)
@@ -179,7 +193,7 @@ async function createTable(core) {
 
     if(numLaunches > 0){ // If the core has flown before
         // Loop for each previous launch, starting with most recent
-        for (let i = numLaunches; i >0; i--) {
+        for (let i = numLaunches-1; i >=0; i--) {
             getPastLaunch(core.launches[i]).then(pastLaunch => {
                 console.log("### PRINTING PAST LAUNCH DATA IN FOR LOOP###")
                 console.log(pastLaunch)
