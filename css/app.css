@@ -1,12 +1,15 @@
 /* Change navbar background and font color */
-#nav{
+.navbar{
     background: hsl(0, 2%, 22%);
+    padding: 2em;
     /*background: linear-gradient(-55deg, rgb(45,45,45) 0%, rgb(28,18,18) 69%)*/
 }
+
 
 /* Change navbar site name font color*/
 #header-name{
     color: white;
+    padding: 1em;
 }
 
 /* Change navbar link font color*/
