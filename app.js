@@ -3,19 +3,7 @@ const getLaunchInfo = async() =>{
         const res = await axios.get('https://api.spacexdata.com/v4/launches/next')
         displayLaunchInfo(res.data) // display info, pass in retrieved data
         console.log("Mission Info")
-        console.log(res.data.date_utc)
-
-
-        // console.log()
-        // console.log("GOING TO PRINT CORE ID")
-        // console.log(res.data.cores[0].core)
-        // // console.log(res.data.cores.core)
-        // // console.log(res.data.cores[0].core)
-        // console.log("DONE PRINTING CORE INFO")
-        // console.log()
-
-
-
+        console.log(res.data)
 
         countDown(res.data.date_unix); // Countdown to next launch
 
@@ -30,9 +18,6 @@ const getLaunchInfo = async() =>{
         console.log("Pad Info")
         console.log(padInfo)
         console.log()
-
-
-        // const coreInfo = await getCoreInfo("5e9e28a7f359187afd3b2662")
 
         let coreInfo =""
 
@@ -63,8 +48,21 @@ function displayLaunchInfo(data){
 
     const date = document.getElementById("date");
     date.innerHTML = data.date_local.substring(0,10);
+
     const time = document.getElementById("time");
     time.innerHTML = data.date_local.substring(11);
+
+    // If there's a youtube stream available show it on page
+    const youtubeLink = document.getElementById("link");
+    const webcast = data.links.webcast;
+    if(webcast) {
+        youtubeLink.innerHTML = `
+        <a href="${webcast}" className="btn btn-circle ms-1" role="button" style="background: rgb(255,0,0);">
+        <h5><i className="fab fa-youtube text-white"></i> Watch it live </h5></a>`
+
+    }else{
+        console.log("No link available yet")
+    }
 
     const details = document.getElementById("details");
     details.innerHTML = data.details;
@@ -206,7 +204,7 @@ async function createTable(core) {
 
                 // Create row with data
                 table +=
-                    `<tr>
+                `<tr>
                     <td>${flight}</td>
                     <td>${date}</td>
                     <td>${name}</td>

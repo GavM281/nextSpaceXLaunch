@@ -65,6 +65,10 @@ th{
     border: 2px solid rgb(126,126,126) ; /* Add border around countdown*/
 }
 
+#webcast{
+    text-align: center;
+}
+
 #patch .img-fluid {
     margin: 0 auto; /* center patch */
 }
