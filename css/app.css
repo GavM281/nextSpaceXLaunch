@@ -19,7 +19,8 @@
 
 
 #page{
-    padding: 30px;  /* Create padding around page*/
+    padding-top: 30px;  /* Create padding around page*/
+    padding-bottom: 30px;  /* Create padding around page*/
     background: #1a1a1a; /* Set page background color */
 }
 
@@ -91,6 +92,10 @@ th{
 }
 
 /* STATS */
+.stats{
+    margin-bottom: 20px;
+}
+
 .stats p {
     color: #a0a5a8; /* Light gray colour*/
     font-size: 20px; /* Make paragraph text bigger*/
@@ -104,6 +109,12 @@ th{
 
 .stats .item .description {
     font-size: 23px;
+    margin-bottom: -5px;
+}
+
+/* Used for secondary units in rocket stats */
+.stats .item .lowerDescription {
+    font-size: 15px;
 }
 
 /* Icon for stats */
@@ -115,6 +126,13 @@ th{
     margin-top: 10px;
 }
 
+/* For description of mission and rocket. Adds border on left */
+blockquote p{
+    /*margin-top: 25px;*/
+    padding: 15px;
+    /*background: #505050;*/
+    border-left: 5px solid #959595;
+}
 
 
 /* FOOTER */

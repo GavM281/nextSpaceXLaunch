@@ -64,8 +64,13 @@ function displayLaunchInfo(data){
         console.log("No link available yet")
     }
 
-    const details = document.getElementById("details");
-    details.innerHTML = data.details;
+    const missionDetails = document.getElementById("missionDetails");
+    const details = data.details;
+    if(details) {
+        missionDetails.innerHTML = `<blockquote><p>${details}</p></blockquote><br>`
+    }else{
+        console.log("No details for this mission")
+    }
 
     const patch = document.getElementById("patch");
     patch.src = data.links.patch.small;
@@ -86,18 +91,20 @@ function displayRocketInfo(data){
     const rocket = document.getElementById("rocket");
     rocket.innerText = data.name;
 
-    const height = document.getElementById("height");
-    height.innerText = data.height.meters;
+    document.getElementById("height").innerText = data.height.meters;
+    document.getElementById("heightFt").innerText = data.height.feet;
 
-    const diameter = document.getElementById("diameter");
-    diameter.innerText = data.diameter.meters;
+    document.getElementById("diameter").innerText = data.diameter.meters;
+    document.getElementById("diameterFt").innerText = data.diameter.feet;
 
-    const mass = document.getElementById("mass");
-    mass.innerText = data.mass.kg;
+    document.getElementById("mass").innerText = data.mass.kg;
+    document.getElementById("massLb").innerText = data.mass.lb;
 
     const engines = document.getElementById("engines");
     engines.innerText = data.first_stage.engines;
 
+    const details = document.getElementById("rocketDescription");
+    details.innerHTML = data.description;
 
     const rocketPic = document.getElementById("rocketPic");
     rocketPic.src = data.flickr_images[0];
@@ -171,7 +178,6 @@ const getPastLaunch = async(id) =>{
 async function createTable(core) {
     const rows = document.getElementById("rows"); // Get table body to be able to add rows
 
-    let numLaunches = ""
 
     // If a core hasn't flown before it may give an error
     try {
