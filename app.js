@@ -131,17 +131,29 @@ function displayPadInfo(data){
     const region = document.getElementById("region");
     region.innerText = data.region;
 
+    // const image = document.getElementById("padImage");
+    // console.log("going to get image for pad")
+    // if(data.images.small != null){
+    //     console.log("getting small launchpad image")
+    //     image.src = data.images.small[0];
+    // }else if(data.images.large != null) {
+    //     console.log("getting large launchpad image")
+    //     image.src = data.images.large[0];
+    // }else {
+    //     console.log("No image for launchpad")
+    // }
+
 
     // Get latitude and longitude from data
-    // const lat = data.latitude;
-    // const long = data.longitude;
-    //
-    // let map = new google.maps.Map(document.getElementById("map"), {
-    //     center: { lat: lat, lng: long }, // Set map to focus on latitude and longitude
-    //     zoom: 15, // Level of zoom, lower is zoomed out further
-    //     mapTypeId: google.maps.MapTypeId.HYBRID, // Hybrid is satellite image with labels
-    //
-    // });
+    const lat = data.latitude;
+    const long = data.longitude;
+
+    let map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: lat, lng: long }, // Set map to focus on latitude and longitude
+        zoom: 15, // Level of zoom, lower is zoomed out further
+        mapTypeId: google.maps.MapTypeId.HYBRID, // Hybrid is satellite image with labels
+
+    });
 }
 
 // Pass in core id, return data on the core

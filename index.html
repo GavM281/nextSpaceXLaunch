@@ -27,7 +27,7 @@
 <nav class="navbar navbar-dark navbar-expand-lg navigation-clean" id="nav">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" id="header-name">Next SpaceX Launch</a>
-        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden"></span><span class="navbar-toggler-icon"></span></button>
+<!--        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden"></span><span class="navbar-toggler-icon"></span></button>-->
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#missionInfo">Mission</a></li>
@@ -229,30 +229,34 @@
                 <!-- STATS -->
                 <div class="col-md-12 col-lg-3">
                     <section class="stats-clean">
-                            <div class="row stats">
-                                <!-- Launches here-->
-                                <div class="col-lg-12 col-sm-6 item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-rocket icon">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"></path>
-                                    <path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"></path>
-                                    <circle cx="15" cy="9" r="1"></circle>
-                                </svg>
-                                    <h3 class="name">Launches Here</h3>
-                                    <p class="description" id="launches"></p>
-                                </div>
-
-                                <!-- Region -->
-                                <div class="col-lg-12 col-sm-6 item">
-                                    <i class="fa fa-map-o icon"></i>
-                                    <h3 class="name">Region</h3>
-                                    <p class="description" id="region">Florida<br /></p>
-                                </div>
+                        <div class="row stats">
+                            <!-- Launches here-->
+                            <div class="col-lg-12 col-sm-6 item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-rocket icon">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"></path>
+                                <path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"></path>
+                                <circle cx="15" cy="9" r="1"></circle>
+                            </svg>
+                                <h3 class="name">Launches Here</h3>
+                                <p class="description" id="launches"></p>
                             </div>
+
+                            <!-- Region -->
+                            <div class="col-lg-12 col-sm-6 item">
+                                <i class="fa fa-map-o icon"></i>
+                                <h3 class="name">Region</h3>
+                                <p class="description" id="region">Florida<br /></p>
+                            </div>
+                        </div>
                     </section>
                 </div>
 
+<!--                <div class="col-lg-12">-->
+<!--                    <img src="" id="padImage" class="roundCorners">-->
+<!--                </div>-->
+
                 <!-- MAP -->
-<!--                <div class="col-md-12 col-lg-9 roundCorners" id="map"></div>-->
+                <div class="col-md-12 col-lg-9 roundCorners" id="map"></div>
 
             </div>
         </div>
@@ -263,7 +267,7 @@
 <footer class="footer-basic">
     <ul class="list-inline">
         <li class="list-inline-item"><a href="https://github.com/r-spacex/SpaceX-API">r/spaceX API</a></li>
-        <li class="list-inline-item"><a href="https://github.com/GavM281">Project Repository</a></li>
+        <li class="list-inline-item"><a href="https://github.com/GavM281/nextSpaceXLaunch">Project Repository</a></li>
     </ul>
     <p class="name">Gavin Mulhern 2021</p>
 </footer>
@@ -272,10 +276,10 @@
 <script src="app.js"></script>
 
 <!-- Google Maps script-->
-<!--<script-->
-<!--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-3-QEHpgnhneCKlo5-rnQPX_mOd9hmNo&libraries=&v=weekly"-->
-<!--        async-->
-<!--&gt;</script>-->
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-3-QEHpgnhneCKlo5-rnQPX_mOd9hmNo&libraries=&v=weekly"
+        async
+></script>
 </body>
 
 </html>
