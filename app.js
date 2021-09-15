@@ -1,6 +1,6 @@
 const getLaunchInfo = async() =>{
     try{
-        const res = await axios.get('https://api.spacexdata.com/v4/launches/next')
+        const res = await axios.get('https://api.spacexdata.com/v5/launches/next')
         displayLaunchInfo(res.data) // display info, pass in retrieved data
         console.log("Mission Info")
         console.log(res.data)
@@ -47,19 +47,24 @@ function displayLaunchInfo(data){
     mission.innerHTML = data.name;
 
     const date = document.getElementById("date");
-    date.innerHTML = data.date_local.substring(0,10);
+    date.innerHTML = data.date_utc.substring(0,10);
 
     const time = document.getElementById("time");
-    time.innerHTML = data.date_local.substring(11);
+    // let utcTime = data.date_utc.substring(11);
+
+    // Get the utc time from api becuase localtime gives time window, not exact time
+    let localTime = new Date(data.date_utc) // Converts utc time to localtime
+    localTime = localTime.toLocaleString() // Changes time into string
+    time.innerHTML = localTime.substring(11); // Substring time to only get time, not date
 
     // If there's a youtube stream available show it on page
-    const youtubeLink = document.getElementById("link");
+    const youtubeLink = document.getElementById("webcast");
+    console.log(data.links.webcast)
     const webcast = data.links.webcast;
-    if(webcast) {
+    if(webcast != null) {
         youtubeLink.innerHTML = `
-        <a href="${webcast}" className="btn btn-circle ms-1" role="button" style="background: rgb(255,0,0);">
-        <h5><i className="fab fa-youtube text-white"></i> Watch it live </h5></a>`
-
+        <a href="${webcast}" class="btn btn-circle ms-1" role="button" style="background: rgb(255,0,0);">
+        <h5><i class="fab fa-youtube text-white">   Watch it live </i></h5></a>`
     }else{
         console.log("No link available yet")
     }
