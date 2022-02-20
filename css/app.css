@@ -19,8 +19,8 @@
 
 
 #page{
-    padding-top: 30px;  /* Create padding around page*/
-    padding-bottom: 30px;  /* Create padding around page*/
+    padding-top: 1em;  /* Create padding around page*/
+    padding-bottom: 1em;  /* Create padding around page*/
     background: #1a1a1a; /* Set page background color */
 }
 
@@ -43,7 +43,7 @@ th{
 
 /* Add space below cards */
 .card {
-    margin-bottom: 30px;
+    margin-bottom: 2em;
 
 }
 
@@ -94,7 +94,8 @@ th{
 
 /* STATS */
 .stats{
-    margin-bottom: 20px;
+    /*margin-bottom: 1em;*/
+    text-align:center;
 }
 
 .stats p {
