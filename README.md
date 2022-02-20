@@ -1,5 +1,6 @@
 # Next SpaceX Launch
 Website with info on the next SpaceX launch.
+![NextSpaceXLaunch1](https://user-images.githubusercontent.com/25159545/134432804-a065baa1-2375-425c-b127-cc2637ae6c60.png)
 
 ## The site is split into 3 parts.
   * ### Mission Info
