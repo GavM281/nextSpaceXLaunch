@@ -136,24 +136,11 @@ function displayPadInfo(data){
     const region = document.getElementById("region");
     region.innerText = data.region;
 
-    // const image = document.getElementById("padImage");
-    // console.log("going to get image for pad")
-    // if(data.images.small != null){
-    //     console.log("getting small launchpad image")
-    //     image.src = data.images.small[0];
-    // }else if(data.images.large != null) {
-    //     console.log("getting large launchpad image")
-    //     image.src = data.images.large[0];
-    // }else {
-    //     console.log("No image for launchpad")
-    // }
-
-
     // Get latitude and longitude from data
     const lat = data.latitude;
     const long = data.longitude;
 
-    let map = new google.maps.Map(document.getElementById("map"), {
+    new google.maps.Map(document.getElementById("map"), {
         center: { lat: lat, lng: long }, // Set map to focus on latitude and longitude
         zoom: 15, // Level of zoom, lower is zoomed out further
         mapTypeId: google.maps.MapTypeId.HYBRID, // Hybrid is satellite image with labels
@@ -195,20 +182,15 @@ const getPastLaunch = async(id) =>{
 async function createTable(core) {
     const rows = document.getElementById("rows"); // Get table body to be able to add rows
 
-
     // If a core hasn't flown before it may give an error
     try {
         numLaunches = core.launches.length; // Number of launches for this core
     }catch (e) {
-        numLaunches = 0; // If there's an error core likely never flew before, set launches as 0
+        numLaunches = 0; // If there's an error set launches as 0
         console.log("error: " + e)
     }
 
-
-
-    console.log()
     console.log("NUMBER OF LAUNCHES IS " + numLaunches)
-    console.log()
 
     let table = '';
 
@@ -216,9 +198,6 @@ async function createTable(core) {
         // Loop for each previous launch, starting with most recent
         for (let i = numLaunches-1; i >=0; i--) {
             getPastLaunch(core.launches[i]).then(pastLaunch => {
-                console.log("### PRINTING PAST LAUNCH DATA IN FOR LOOP###")
-                console.log(pastLaunch)
-
                 const flight = pastLaunch.flight_number;
                 const date = pastLaunch.date_utc.substring(0, 10); // substring to cut out time
                 const name = pastLaunch.name;
@@ -238,13 +217,12 @@ async function createTable(core) {
                 rows.innerHTML = table; // Add row
             })
         }
-    }else{ // This core has never flown before
+    }else{ // No history for past launches or core hasn't flown before
         const history = document.getElementById("history") // Get div with table
         // Replace table with message
-        history.innerHTML = '<br><h2 class="hr"> This is the first launch for this rocket!</h3>'
+        history.innerHTML = '<p class="hr"> No data for this cores past launches</p>'
     }
 }
-
 
 
 // Based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_countdown
@@ -253,25 +231,46 @@ const countDown = (launchDateUnix) => {
     // multiply by 1000 to get milliseconds since Unix Epoch
     let countDownDate = launchDateUnix * 1000;
 
-    setInterval(() => {
-        // Get today's date and time
-        let now = new Date().getTime();
+    // Get today's date and time
+    let now = new Date().getTime();
 
-        // Find the distance between now and the count down date
-        let distance = countDownDate - now;
+    // Find the distance between now and the count down date
+    let distance = countDownDate - now;
 
-        // Time calculations for days, hours, minutes and seconds
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Set values of countdown
-        document.getElementById('days').innerHTML = days;
-        document.getElementById('minutes').innerHTML = minutes;
-        document.getElementById('hours').innerHTML = hours;
-        document.getElementById('seconds').innerHTML = seconds;
-    }, 1000); // Update every second
+    if(seconds > 0) { // If launch is in the future
+        setInterval(() => {
+            // Get today's date and time
+            let now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            let distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Set values of countdown
+            document.getElementById('days').innerHTML = days;
+            document.getElementById('minutes').innerHTML = minutes;
+            document.getElementById('hours').innerHTML = hours;
+            document.getElementById('seconds').innerHTML = seconds;
+        }, 1000); // Update every second
+    } else { // Showing last launch
+        document.getElementById('warning').innerHTML =
+            `<div class="alert alert-danger roundCorners" role="alert">
+                No data for next launch found. Showing previous launch.
+            </div>`;
+
+        // Set timer to be 00
+        document.getElementById('days').innerHTML = "00";
+        document.getElementById('minutes').innerHTML = "00";
+        document.getElementById('hours').innerHTML = "00";
+        document.getElementById('seconds').innerHTML = "00";
+    }
 };
 
 
