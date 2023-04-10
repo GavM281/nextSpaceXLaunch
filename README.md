@@ -1,28 +1,34 @@
-# Next SpaceX Launch
-Website with info on the next SpaceX launch.
-![NextSpaceXLaunch1](https://user-images.githubusercontent.com/25159545/134432804-a065baa1-2375-425c-b127-cc2637ae6c60.png)
+# Next Rocket Launch
+> *Previously nextSpaceXLaunch. Migrated to the [Launch Library 2 API](https://thespacedevs.com/llapi) after [r/spaceX API](https://github.com/r-spacex/SpaceX-API) was discontinued.
+Site now shows next launch from all companies.*
 
+This is a website to display info on the next Rocket launch.
 ## The site is split into 3 parts.
   * ### Mission Info
     * Mission name
     * Flight number
-    * Launch date and time
+    * Launch date
+    * Launch window
     * Mission description
-    * Countdown to the launch
-    * Mission patch
+    * Countdown to launch window opening
+    * Status of launch
+    * Details on the company behind the launch with a link to their wikipedia page and company page
     * Link to Youtube stream of the launch when available
     
   * ### Rocket Info
-    * Rocket information ( height, diameter, mass, number of engines)
-    * Dynamic table with the history of the rocket cores past flights showing:
-      * Flight numbers
-      * Flight dates
-      * Flight name
-      * Links to Wikipedia and the launches webcast on Youtube.
-    * If there are no past launches the table is removed and replaced with a message saying no data available
+    * Rocket name
+    * Link to Rockets wikipedia page
+    * Rocket stats for: 
+      * height
+      * diameter
+      * mass
+      * number of successful launches
+    * Description of rocket
     * Picture of the rocket
     
   * ### Launchpad Info
+    * Name of the launchpad
+    * Link to Launchpad wikipedia
     * Number of launches there
     * Region 
     * Satellite view of the launchpad through Google Maps
@@ -33,10 +39,18 @@ ___
 * HTML
 * CSS
 * Javascript
-* [r/spaceX API](https://github.com/r-spacex/SpaceX-API)
+* [Launch Library 2 API](https://thespacedevs.com/llapi)
 * Bootstrap
 * Bootstrap Studio
 * Axios
 * Google Maps API
 * Font Awesome
-  
+* ~~[r/spaceX API](https://github.com/r-spacex/SpaceX-API)~~ *Migrated away after it was discontinued*
+
+### Differences from nextSpaceXLaunch
+* Site now shows next launch from any company
+* Mission status added
+* Mission patch has been removed and replaced with information on launch provider E.G. SpaceX, Arianespace
+* Wikipedia links for rocket and launchpad added
+* Removal of table displaying past launches completed by a reused first stage
+  * New API doesn't have this info

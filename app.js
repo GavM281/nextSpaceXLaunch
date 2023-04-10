@@ -1,7 +1,8 @@
 const getLaunchInfo = async() =>{
     try{
         // const res = await axios.get('https://api.spacexdata.com/v5/launches/next')
-        const response = await axios.get('https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=2')
+        // const response = await axios.get('https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=2')
+        const response = await axios.get('https://ll.thespacedevs.com/2.2.0/launch/upcoming?limit=1')
         console.log(response.data)
         const res = response.data.results[0];
         console.log(res)
@@ -81,7 +82,8 @@ function displayLaunchInfo(data){
 const getServiceProviderInfo = async(id) =>{
     try{
         // const res = await axios.get('https://api.spacexdata.com/v4/rockets/' + id)
-        const res = await axios.get('https://lldev.thespacedevs.com/2.2.0/agencies/' + id)
+        // const res = await axios.get('https://lldev.thespacedevs.com/2.2.0/agencies/' + id)
+        const res = await axios.get('https://ll.thespacedevs.com/2.2.0/agencies/' + id)
         console.log(res)
         return (res.data) // Return data
     }catch(e){
@@ -93,7 +95,8 @@ const getServiceProviderInfo = async(id) =>{
 const getRocketInfo = async(id) =>{
     try{
         // const res = await axios.get('https://api.spacexdata.com/v4/rockets/' + id)
-        const res = await axios.get('https://lldev.thespacedevs.com/2.2.0/config/launcher/' + id)
+        // const res = await axios.get('https://lldev.thespacedevs.com/2.2.0/config/launcher/' + id)
+        const res = await axios.get('https://ll.thespacedevs.com/2.2.0/config/launcher/' + id)
         return (res.data) // Return data
     }catch(e){
         console.log("error: " + e)
@@ -139,17 +142,6 @@ function displayRocketInfo(data){
     // createTable(data.flights);
 }
 
-// Pass in launchpad id, return info on it
-const getPadInfo = async(id) =>{
-    try{
-        const res = await axios.get('https://api.spacexdata.com/v4/launchpads/' + id)
-
-        return (res.data) // Return data
-    }catch(e){
-        console.log("error: " + e)
-    }
-}
-
 function displayPadInfo(data){
     console.log("displayPadInfo: " + data.data)
     console.log("displayPadInfo: " + data)
@@ -164,14 +156,14 @@ function displayPadInfo(data){
     region.innerText = data.location.name;
 
     const wikiLink = document.getElementById("padWikiLink");
-    // console.log(data.wiki_url);
-    // wikiLink.setAttribute('href', data.wiki_url);
+    console.log("data.wiki_url: " + data.wiki_url);
+    let wiki = data.wiki_url;
 
-
-    if(data.wiki_url !== "" || data.wiki_url !== null) {
-        wikiLink.setAttribute('href', data.wiki_url);
+    if(!wiki) {
+        wikiLink.remove();
     } else {
-        wikiLink.innerHTML = ``;
+        console.log("wiki url apparently not empty")
+        wikiLink.setAttribute('href', data.wiki_url);
     }
     // wikiLink.innerHTML = `<a href="${data.wiki_url}" className="btn btn-circle ms-1" role="button" style="background: rgb(255,0,0);"><i
     //     className="fab fa-youtube text-white"></i></a>`
@@ -191,20 +183,6 @@ function displayPadInfo(data){
     });
 }
 
-// Pass in core id, return data on the core
-const getCoreInfo = async(id) =>{
-    try{
-        const core = await axios.get('https://api.spacexdata.com/v4/cores/' + id); // Get info on core
-        console.log()
-        console.log("core id inside get core info  " +core.id)
-        console.log()
-        return(core.data)
-    }catch(e){
-        console.log("error " + e)
-    }
-}
-
-
 // Pass in launch id, return data on launch
 const getPastLaunch = async(id) =>{
     try{
@@ -221,68 +199,6 @@ const getPastLaunch = async(id) =>{
         console.log("error: " + e)
     }
 }
-
-// Table used to show past launches from core used in next launch
-// async function createTable(core) {
-// async function createTable(flights) {
-//     const rows = document.getElementById("rows"); // Get table body to be able to add rows
-//
-//
-//     // If a core hasn't flown before it may give an error
-//     // try {
-//         numLaunches = flights.length; // Number of launches for this core
-//     // }catch (e) {
-//     //     numLaunches = 0; // If there's an error core likely never flew before, set launches as 0
-//     //     console.log("error: " + e)
-//     // }
-//
-//
-//
-//     console.log()
-//     console.log("NUMBER OF LAUNCHES IS " + flights.length)
-//     console.log()
-//
-//     let table = '';
-//
-//     if(numLaunches > 0){ // If the core has flown before
-//         // Loop for each previous launch, starting with most recent
-//         for (let i = numLaunches-1; i >=0; i--) {
-//             // getPastLaunch(core.launches[i]).then(pastLaunch => {
-//             getPastLaunch(flights[i].id).then(pastLaunch => {
-//                 console.log("### PRINTING PAST LAUNCH DATA IN FOR LOOP###")
-//                 console.log(pastLaunch)
-//
-//                 // const flight = pastLaunch.flight_number;
-//                 const flight = "123";
-//                 const date = pastLaunch.mission_end.substring(0, 10); // substring to cut out time
-//                 // const name = pastLaunch.name;
-//                 const name = "pastLaunch.name";
-//                 // const webcast = pastLaunch.links.webcast;
-//                 const webcast = "pastLaunch.links.webcast";
-//                 // const wiki = pastLaunch.links.wikipedia;
-//                 const wiki = "pastLaunch.links.wikipedia";
-//
-//                 // Create row with data
-//                 table +=
-//                 `<tr>
-//                     <td>${flight}</td>
-//                     <td>${date}</td>
-//                     <td>${name}</td>
-//                     <td><a href="${wiki}" class="btn btn-light btn-circle"><i class="fab fa-wikipedia-w text-dark"></i></a></td>
-//                     <td><a href="${webcast}" class="btn btn-circle ms-1" role="button" style="background: rgb(255,0,0);"><i class="fab fa-youtube text-white"></i></a><br></td>
-//                 </tr>`
-//
-//                 rows.innerHTML = table; // Add row
-//             })
-//         }
-//     }else{ // This core has never flown before
-//         const history = document.getElementById("history") // Get div with table
-//         // Replace table with message
-//         history.innerHTML = '<br><h2 class="hr"> This is the first launch for this rocket!</h3>'
-//     }
-// }
-
-
 
 // Based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_countdown
 // Countdown to the launch time
