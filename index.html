@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>SpaceX launch</title>
+    <title>Next Rocket launch</title>
 
     <!-- Axios-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -26,7 +26,7 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-dark navbar-expand-lg navigation-clean" id="nav">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#" id="header-name">Next SpaceX Launch</a>
+        <a class="navbar-brand" href="#" id="header-name">Next Rocket Launch</a>
 <!--        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden"></span><span class="navbar-toggler-icon"></span></button>-->
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="navbar-nav ms-auto">
@@ -44,12 +44,11 @@
     <!-- MISSION INFO -->
     <div id="missionInfo" class="card roundCorners">
         <div class="card-body roundCorners">
-            <div class="row align-items-center no-gutters">
+            <h1 id="mission-name" class="hr"></h1>
+            <div class="row align-items-center">
 
                 <!-- STATS, DESCRIPTION, COUNTDOWN -->
                 <div class="col">
-                    <h1 id="mission-name" class="hr"></h1>
-
                     <section class="stats-clean">
                         <div class="row stats">
 
@@ -70,7 +69,7 @@
                             <!-- LAUNCH WINDOW -->
                             <div class="col-md-4 item">
                                 <i class="far fa-clock icon"></i>
-                                <h3 class="name">Est Launch time</h3>
+                                <h3 class="name">Launch Window</h3>
                                 <p class="description" id="time"><br /></p>
                             </div>
                         </div>
@@ -80,6 +79,8 @@
 
                     <!-- COUNTDOWN -->
                     <section id="countdown">
+                        <h2 style="text-align: center;"> Time to Launch Window </h2>
+                        <hr style="background-color: #a2a2a2">
                         <div class="row g-0 text-center">
                             <div class="col timer">
                                 <h1 class="text-primary" id="days">00</h1>
@@ -100,13 +101,31 @@
                         </div>
                     </section>
 
+                    <section style="text-align:center;"><p id="missionStatus"></p></section>
+
                     <section id="webcast"></section>
                 </div>
 
 
-                <!-- MISSION PATCH -->
-                <div class="col-xl-4 text-center mb-4">
-                    <img src="" id="patch" class="img-fluid roundCorners" alt="Mission patch">
+                <!-- Launch Provider Info -->
+                <div class="col-lg-4 text-center mb-4">
+                    <img src="" id="providerLogo" class="img-fluid roundCorners hr" alt="Provider Logo">
+                    <div>
+<!--                        <h3>Launch Provider: <span id="launchProvider"></span></h3>-->
+<!--                        <h4>Type: <span id="launchType"></span></h4>-->
+<!--                        <h4>Founded: <span id="providerFoundingYear"></span></h4>-->
+                        <p id="providerDesc"></p>
+                        <div>
+                            <a id="launchProviderWiki" href="" class="btn btn-circle" role="button" style="background: rgb(255,255,255); width: 25% ">
+                                <i class="fab fa-wikipedia-w text-black"></i>
+                            </a>
+                            <a id="launchProviderWebsite" href="" class="btn btn-circle" role="button" style="background: rgb(255,255,255); width: 25% ">
+                                <img src="" id="providerLogoButton" style="max-width: 100%; max-height: 100%;">
+                            </a>
+                        </div>
+
+                    </div>
+<!--                    <img src="" id="patch" class="img-fluid roundCorners" alt="Mission patch">-->
                 </div>
             </div>
         </div>
@@ -117,7 +136,12 @@
     <!-- ROCKET INFO-->
     <div id="rocketInfo" class="card roundCorners">
         <div class="card-body roundCorners">
-            <h1 id="rocket" class="hr"></h1>
+            <div class = "hr" style="display: inline-block !important;">
+                <h1 id="rocket" style="display: inline-block !important; vertical-align: middle;"></h1>
+                <a id="rocketWikiLink" href="" class="btn btn-circle ms-1" role="button" style="background: rgb(255,255,255); margin-left: 1em">
+                    <i class="fab fa-wikipedia-w text-black"></i>
+                </a>
+            </div>
 
             <div class="row">
 
@@ -129,16 +153,15 @@
                         <div class="row">
 
                             <!-- HEIGHT -->
-                            <div class="col-sm-6 col-lg-3 item">
+                            <div class="col-sm-6 col-md-3 item">
                                 <i class="fas fa-arrows-alt-v icon"></i>
 
                                 <h3 class="name">Height</h3>
                                 <p class="description"><span id="height"></span> Meters</p>
-                                <p class="lowerDescription">(<span id="heightFt"></span> Feet)</p>
                             </div>
 
                             <!-- DIAMETER -->
-                            <div class="col-sm-6 col-lg-3 item">
+                            <div class="col-sm-6 col-md-3 item">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-left-circle icon">
                                     <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-5.904 2.803a.5.5 0 1 0 .707-.707L6.707 6h2.768a.5.5 0 1 0 0-1H5.5a.5.5 0 0 0-.5.5v3.975a.5.5 0 0 0 1 0V6.707l4.096 4.096z"></path>
                                 </svg>
@@ -148,27 +171,19 @@
 
                                 <h3 class="name">Diameter</h3>
                                 <p class="description"><span id="diameter"></span> Meters</p>
-                                <p class="lowerDescription">(<span id="diameterFt"></span> Feet)</p>
                             </div>
 
                             <!-- MASS -->
-                            <div class="col-sm-6 col-lg-3 item"><i class="fas fa-weight-hanging icon"></i>
+                            <div class="col-sm-6 col-md-3 item"><i class="fas fa-weight-hanging icon"></i>
                                 <h3 class="name">Mass</h3>
                                 <p class="description"><span id="mass"></span>kg</p>
-                                <p class="lowerDescription">(<span id="massLb"></span>lb)</p>
                             </div>
 
-                            <!-- ENGINES -->
-                            <div class="col-sm-6 col-lg-3 item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-circles icon">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                    <circle cx="6.5" cy="17" r="4"></circle>
-                                    <circle cx="17.5" cy="17" r="4"></circle>
-                                </svg>
-
-                                <h3 class="name">Engines</h3>
-                                <p class="description"><span id="engines">12</span></p>
+                            <!-- Launches -->
+                            <div class="col-sm-6 col-md-3 item">
+                                <i class="fas fa-solid fa-rocket icon"></i>
+                                <h3 class="name">Successful Launches</h3>
+                                <p class="description"><span id="rocketSuccessLaunches"></span></p>
                             </div>
                         </div>
                     </section>
@@ -179,35 +194,10 @@
                         <p id="rocketDescription"></p> <!-- Adds description of rocket using JS -->
                     </blockquote>
 
-
-                    <!-- History -->
-                    <div class="text-center" id="history">
-                        <br>
-                        <!-- If there are no past flights this is replaced -->
-                        <h3>Past flights from this core</h3>
-
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Flight</th>
-                                    <th>Date</th>
-                                    <th>Name</th>
-                                    <th>Wikipedia</th>
-                                    <th>Webcast</th>
-                                </tr>
-                                </thead>
-                                <tbody id="rows"> <!-- Rows are dynamically added below -->
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
                 </div>
 
                 <!-- ROCKET PICTURE -->
-                <div class="col-lg-12 col-xl-4">
+                <div class="col-md-12 col-xl-4">
                     <img src="" class="img-fluid roundCorners" id="rocketPic" alt="Rocket picture" width="100%">
                 </div>
             </div>
@@ -218,7 +208,12 @@
     <!-- LAUNCHPAD INFO -->
     <div id="launchpadInfo" class="card roundCorners">
         <div class="card-body roundCorners">
-            <h1 id="name" class="hr"></h1>
+            <div class = "hr" style="display: inline-block !important;">
+                <h1 id="name" style="display: inline-block !important; vertical-align: middle;"></h1>
+                <a id="padWikiLink" href="" class="btn btn-circle ms-2" role="button" style="background: rgb(255,255,255); margin-left: 1em">
+                    <i class="fab fa-wikipedia-w text-black"></i>
+                </a>
+            </div>
 
             <!-- STATS AND MAP-->
             <div class="row" style="padding-right: 1em; padding-left: 1em;">
@@ -242,15 +237,11 @@
                             <div class="col-lg-12 col-sm-6 item">
                                 <i class="fa fa-map-o icon"></i>
                                 <h3 class="name">Region</h3>
-                                <p class="description" id="region">Florida<br /></p>
+                                <p class="description" id="region"><br/></p>
                             </div>
                         </div>
                     </section>
                 </div>
-
-<!--                <div class="col-lg-12">-->
-<!--                    <img src="" id="padImage" class="roundCorners">-->
-<!--                </div>-->
 
                 <!-- MAP -->
                 <div class="col-md-12 col-lg-9 roundCorners" id="map"></div>
@@ -263,10 +254,10 @@
 <!-- FOOTER -->
 <footer class="footer-basic">
     <ul class="list-inline">
-        <li class="list-inline-item"><a href="https://github.com/r-spacex/SpaceX-API">r/spaceX API</a></li>
+        <li class="list-inline-item"><a href="https://thespacedevs.com/llapi">Launch Library 2 API</a></li>
         <li class="list-inline-item"><a href="https://github.com/GavM281/nextSpaceXLaunch">Project Repository</a></li>
     </ul>
-    <p class="name">Gavin Mulhern 2021</p>
+    <p class="name">Gavin Mulhern 2021-2023</p>
 </footer>
 
 <!-- Project script -->
