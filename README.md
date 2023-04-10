@@ -10,6 +10,7 @@ Website with info on the next SpaceX launch.
     * Mission description
     * Countdown to the launch
     * Mission patch
+    * Link to Youtube stream of the launch when available
     
   * ### Rocket Info
     * Rocket information ( height, diameter, mass, number of engines)
@@ -18,13 +19,13 @@ Website with info on the next SpaceX launch.
       * Flight dates
       * Flight name
       * Links to Wikipedia and the launches webcast on Youtube.
-    * If there are no past launches the table is removed and replaced with a message saying it's the first flight.
+    * If there are no past launches the table is removed and replaced with a message saying no data available
     * Picture of the rocket
     
   * ### Launchpad Info
     * Number of launches there
     * Region 
-    * Satellite view of the launchpad through Google Maps.
+    * Satellite view of the launchpad through Google Maps
 
 ___
 

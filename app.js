@@ -176,24 +176,12 @@ function displayPadInfo(data){
     // wikiLink.innerHTML = `<a href="${data.wiki_url}" className="btn btn-circle ms-1" role="button" style="background: rgb(255,0,0);"><i
     //     className="fab fa-youtube text-white"></i></a>`
 
-    // const image = document.getElementById("padImage");
-    // console.log("going to get image for pad")
-    // if(data.images.small != null){
-    //     console.log("getting small launchpad image")
-    //     image.src = data.images.small[0];
-    // }else if(data.images.large != null) {
-    //     console.log("getting large launchpad image")
-    //     image.src = data.images.large[0];
-    // }else {
-    //     console.log("No image for launchpad")
-    // }
-
-
     // Get latitude and longitude from data
 
     console.log("data.latitude = " + data.latitude)
     console.log("data.longitude = " + data.longitude)
 
+    new google.maps.Map(document.getElementById("map"), {
     const lat = parseFloat(data.latitude);
     const long = parseFloat(data.longitude);
 
@@ -303,25 +291,46 @@ const countDown = (windowStart) => {
     // multiply by 1000 to get milliseconds since Unix Epoch
     let countDownDate = new Date(windowStart).getTime();
 
-    setInterval(() => {
-        // Get today's date and time
-        let now = new Date().getTime();
+    // Get today's date and time
+    let now = new Date().getTime();
 
-        // Find the distance between now and the count down date
-        let distance = countDownDate - now;
+    // Find the distance between now and the count down date
+    let distance = countDownDate - now;
 
-        // Time calculations for days, hours, minutes and seconds
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Set values of countdown
-        document.getElementById('days').innerHTML = days;
-        document.getElementById('minutes').innerHTML = minutes;
-        document.getElementById('hours').innerHTML = hours;
-        document.getElementById('seconds').innerHTML = seconds;
-    }, 1000); // Update every second
+    if(seconds > 0) { // If launch is in the future
+        setInterval(() => {
+            // Get today's date and time
+            let now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            let distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Set values of countdown
+            document.getElementById('days').innerHTML = days;
+            document.getElementById('minutes').innerHTML = minutes;
+            document.getElementById('hours').innerHTML = hours;
+            document.getElementById('seconds').innerHTML = seconds;
+        }, 1000); // Update every second
+    } else { // Showing last launch
+        document.getElementById('warning').innerHTML =
+            `<div class="alert alert-danger roundCorners" role="alert">
+                No data for next launch found. Showing previous launch.
+            </div>`;
+
+        // Set timer to be 00
+        document.getElementById('days').innerHTML = "00";
+        document.getElementById('minutes').innerHTML = "00";
+        document.getElementById('hours').innerHTML = "00";
+        document.getElementById('seconds').innerHTML = "00";
+    }
 };
 
 
