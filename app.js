@@ -181,7 +181,6 @@ function displayPadInfo(data){
     console.log("data.latitude = " + data.latitude)
     console.log("data.longitude = " + data.longitude)
 
-    new google.maps.Map(document.getElementById("map"), {
     const lat = parseFloat(data.latitude);
     const long = parseFloat(data.longitude);
 
