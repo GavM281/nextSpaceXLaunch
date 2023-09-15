@@ -47,6 +47,33 @@ th{
 
 }
 
+/*iframe {*/
+/*    max-width: 100% !important;*/
+/*    width: 100vw !important;*/
+/*    height: auto;*/
+/*    max-height: 75vh !important;*/
+/*}*/
+
+#youtubeStreamContainer {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+#youtubeStreamContainer::after {
+    display: block;
+    content: "";
+    padding-top: 56.25%;
+}
+
+#youtubeStreamContainer iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 /* Change card background color*/
 .card-body{
     background: #393737FF;

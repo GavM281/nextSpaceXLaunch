@@ -30,10 +30,13 @@ getLaunchInfo();
 function displayLaunchInfo(data){
     const flightNum = document.getElementById("number");
     flightNum.innerHTML = data.agency_launch_attempt_count + " (" + data.agency_launch_attempt_count_year + " this year)";
+
     const mission = document.getElementById("mission-name");
     mission.innerHTML = data.name;
+
     const date = document.getElementById("date");
     date.innerHTML = data.window_start.substring(0,10); // Get date of launch
+
     const time = document.getElementById("time");
     if(data.window_start === data.window_end){ // Has exact launch time
         time.innerHTML = data.window_start.substring(11,19) + " UTC"; // Only show exact time
@@ -41,15 +44,30 @@ function displayLaunchInfo(data){
     }else{
         time.innerHTML = data.window_start.substring(11,19) + ' - ' + data.window_end.substring(11,19) + " UTC"; // Show launch window times
     }
-    // If there's a youtube stream available show it on page
-    const youtubeLink = document.getElementById("webcast");
+
+    // If there's a YouTube stream available show it on page
     if(data.webcast_live === true) {
         console.log(data.webcast)
         const webcast = data.webcast;
-        youtubeLink.innerHTML = `
-        <a href="${webcast}" class="btn btn-circle ms-1" role="button" style="background: rgb(255,0,0);">
-        <h5><i class="fab fa-youtube text-white">   Watch it live </i></h5></a>`
-    }else{
+        // const webcast = "https://www.youtube.com/watch?v=Iz6qdzVCN9g"
+
+        let videoId = webcast.split('v=')[1];
+        const ampersandPosition = videoId.indexOf('&');
+        if (ampersandPosition !== -1) {
+            videoId = videoId.substring(0, ampersandPosition);
+        }
+
+        const liveStream = document.getElementById("youtubeLiveStream");
+        liveStream.innerHTML =`
+            <div class="card roundCorners">
+                <div class="card-body roundCorners" id="youtubeStreamContainer">
+                    <iframe width=560 height=315 id="StreamFrame" class="roundCorners" src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player"
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
+                            picture-in-picture; web-share" allowfullscreen>
+                    </iframe>
+                </div>
+            </div>`
+    } else {
         console.log("No link available yet")
     }
 
