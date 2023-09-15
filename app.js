@@ -5,12 +5,12 @@ const getLaunchInfo = async() =>{
         const response = await axios.get('https://ll.thespacedevs.com/2.2.0/launch/upcoming?hide_recent_previous=true&limit=1')
         console.log(response.data)
         const res = response.data.results[0];
+        console.log("Next Launch:")
         console.log(res)
         displayLaunchInfo(res) // display info, pass in retrieved data
         console.log("Mission Info")
 
         countDown(res.window_start); // Countdown to next launch
-
 
         const rocketInfo = await getRocketInfo(res.rocket.configuration.id) // pass in rocket id
         console.log("Rocket Info")
@@ -30,19 +30,19 @@ getLaunchInfo();
 function displayLaunchInfo(data){
     const flightNum = document.getElementById("number");
     flightNum.innerHTML = data.agency_launch_attempt_count + " (" + data.agency_launch_attempt_count_year + " this year)";
-
     const mission = document.getElementById("mission-name");
     mission.innerHTML = data.name;
-
     const date = document.getElementById("date");
     date.innerHTML = data.window_start.substring(0,10); // Get date of launch
-
     const time = document.getElementById("time");
+    if(data.window_start === data.window_end){ // Has exact launch time
+        time.innerHTML = data.window_start.substring(11,19) + " UTC"; // Only show exact time
+        document.getElementById("LaunchWindowText").innerText = "Launch Time"; // Change Launch Window text to Launch time
+    }else{
         time.innerHTML = data.window_start.substring(11,19) + ' - ' + data.window_end.substring(11,19) + " UTC"; // Show launch window times
-
+    }
     // If there's a youtube stream available show it on page
     const youtubeLink = document.getElementById("webcast");
-
     if(data.webcast_live === true) {
         console.log(data.webcast)
         const webcast = data.webcast;
@@ -83,7 +83,8 @@ const getServiceProviderInfo = async(id) =>{
     try{
         // const res = await axios.get('https://api.spacexdata.com/v4/rockets/' + id)
         // const res = await axios.get('https://lldev.thespacedevs.com/2.2.0/agencies/' + id)
-        const res = await axios.get('https://ll.thespacedevs.com/2.2.0/agencies/' + id)
+        const res = await axios.get('https://lldev.thespacedevs.com/2.2.0/agencies/' + id)
+        console.log("Service Provider: ")
         console.log(res)
         return (res.data) // Return data
     }catch(e){

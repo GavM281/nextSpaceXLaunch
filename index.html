@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <title>Next Rocket launch</title>
 
     <!-- Axios-->
@@ -26,6 +27,7 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-dark navbar-expand-lg navigation-clean" id="nav">
     <div class="container-fluid">
+        <img src="logo.png" style="height: 4em" alt="Site Icon">
         <a class="navbar-brand" href="#" id="header-name">Next Rocket Launch</a>
 <!--        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden"></span><span class="navbar-toggler-icon"></span></button>-->
         <div class="collapse navbar-collapse" id="navcol-1">
@@ -69,7 +71,7 @@
                             <!-- LAUNCH WINDOW -->
                             <div class="col-md-4 item">
                                 <i class="far fa-clock icon"></i>
-                                <h3 class="name">Launch Window</h3>
+                                <h3 class="name" id="LaunchWindowText">Launch Window</h3>
                                 <p class="description" id="time"><br /></p>
                             </div>
                         </div>
@@ -80,7 +82,7 @@
                     <!-- COUNTDOWN -->
                     <section id="countdown">
                         <h2 style="text-align: center;"> Time to Launch Window </h2>
-                        <hr style="background-color: #a2a2a2">
+                        <hr style="background-color: #a2a2a2; margin-top: 0">
                         <div class="row g-0 text-center">
                             <div class="col timer">
                                 <h1 class="text-primary" id="days">00</h1>
@@ -115,12 +117,12 @@
 <!--                        <h4>Type: <span id="launchType"></span></h4>-->
 <!--                        <h4>Founded: <span id="providerFoundingYear"></span></h4>-->
                         <p id="providerDesc"></p>
-                        <div>
-                            <a id="launchProviderWiki" href="" class="btn btn-circle" role="button" style="background: rgb(255,255,255); width: 25% ">
+                        <div style="display: inline-flex; justify-content: space-evenly;">
+                            <a id="launchProviderWiki" href="" class="btn btn-circle" role="button" style="width: 25%;  display: flex; justify-content: center; align-items: center; ">
                                 <i class="fab fa-wikipedia-w text-black"></i>
                             </a>
-                            <a id="launchProviderWebsite" href="" class="btn btn-circle" role="button" style="background: rgb(255,255,255); width: 25% ">
-                                <img src="" id="providerLogoButton" style="max-width: 100%; max-height: 100%;">
+                            <a id="launchProviderWebsite" href="" class="btn btn-circle" role="button" style="width: 25%;">
+                                <img src="" alt="Launch Provider Logo" id="providerLogoButton" style="max-width: 100%; max-height: 100%;">
                             </a>
                         </div>
 
@@ -138,7 +140,7 @@
         <div class="card-body roundCorners">
             <div class = "hr" style="display: inline-block !important;">
                 <h1 id="rocket" style="display: inline-block !important; vertical-align: middle;"></h1>
-                <a id="rocketWikiLink" href="" class="btn btn-circle ms-1" role="button" style="background: rgb(255,255,255); margin-left: 1em">
+                <a id="rocketWikiLink" href="" class="btn btn-circle ms-1" role="button" style=" margin-left: 1em">
                     <i class="fab fa-wikipedia-w text-black"></i>
                 </a>
             </div>
@@ -210,7 +212,7 @@
         <div class="card-body roundCorners">
             <div class = "hr" style="display: inline-block !important;">
                 <h1 id="name" style="display: inline-block !important; vertical-align: middle;"></h1>
-                <a id="padWikiLink" href="" class="btn btn-circle ms-2" role="button" style="background: rgb(255,255,255); margin-left: 1em">
+                <a id="padWikiLink" href="" class="btn btn-circle ms-2" role="button" style="margin-left: 1em">
                     <i class="fab fa-wikipedia-w text-black"></i>
                 </a>
             </div>
