@@ -2,7 +2,7 @@ const getLaunchInfo = async() =>{
     try{
         // const res = await axios.get('https://api.spacexdata.com/v5/launches/next')
         // const response = await axios.get('https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=2')
-        const response = await axios.get('https://ll.thespacedevs.com/2.2.0/launch/upcoming?limit=1')
+        const response = await axios.get('https://ll.thespacedevs.com/2.2.0/launch/upcoming?hide_recent_previous=true&limit=1')
         console.log(response.data)
         const res = response.data.results[0];
         console.log(res)
@@ -38,7 +38,7 @@ function displayLaunchInfo(data){
     date.innerHTML = data.window_start.substring(0,10); // Get date of launch
 
     const time = document.getElementById("time");
-        time.innerHTML = data.window_start.substring(11,19) + ' - ' + data.window_end.substring(11,19); // Show launch window times
+        time.innerHTML = data.window_start.substring(11,19) + ' - ' + data.window_end.substring(11,19) + " UTC"; // Show launch window times
 
     // If there's a youtube stream available show it on page
     const youtubeLink = document.getElementById("webcast");
@@ -207,7 +207,7 @@ const countDown = (windowStart) => {
     let countDownDate = new Date(windowStart).getTime();
 
     // Get today's date and time
-    let now = new Date().getTime();
+    let now = Date.now();
 
     // Find the distance between now and the count down date
     let distance = countDownDate - now;

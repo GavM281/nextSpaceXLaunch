@@ -75,6 +75,10 @@ th{
     margin: 0 auto; /* center patch */
 }
 
+#providerLogo {
+    max-height: 15em;
+}
+
 /* Minimum height for map */
 #map{
     min-height: 30em;
@@ -89,7 +93,7 @@ th{
     display: block;
     border-top: 1px solid rgba(200, 201, 215, 0.23);
     margin-top: 0.5em;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
 }
 
 /* STATS */
