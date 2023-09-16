@@ -28,14 +28,13 @@ getLaunchInfo();
 
 
 function displayLaunchInfo(data){
-    const flightNum = document.getElementById("number");
-    flightNum.innerHTML = data.agency_launch_attempt_count + " (" + data.agency_launch_attempt_count_year + " this year)";
 
-    const mission = document.getElementById("mission-name");
-    mission.innerHTML = data.name;
+    if(data.agency_launch_attempt_count !== null) document.getElementById("number").innerHTML =
+        data.agency_launch_attempt_count + " (" + data.agency_launch_attempt_count_year + " this year)";
 
-    const date = document.getElementById("date");
-    date.innerHTML = data.window_start.substring(0,10); // Get date of launch
+    if(data.name !== null) document.getElementById("mission-name").innerHTML = data.name;
+
+    if(data.window_start!==null) document.getElementById("date").innerHTML = data.window_start.substring(0,10); // Get date of launch
 
     const time = document.getElementById("time");
     if(data.window_start === data.window_end){ // Has exact launch time
@@ -51,6 +50,7 @@ function displayLaunchInfo(data){
         const webcast = data.webcast;
         // const webcast = "https://www.youtube.com/watch?v=Iz6qdzVCN9g"
 
+        // Get video id from link
         let videoId = webcast.split('v=')[1];
         const ampersandPosition = videoId.indexOf('&');
         if (ampersandPosition !== -1) {
@@ -68,19 +68,14 @@ function displayLaunchInfo(data){
                 </div>
             </div>`
     } else {
-        console.log("No link available yet")
+        console.log("No livestream link available yet")
     }
-
-    const missionDetails = document.getElementById("missionDetails");
-    const details = data.mission.description;
 
     document.getElementById("missionStatus").innerHTML = `<b>${data.status.description}</b>`;
 
-    if(details) {
-        missionDetails.innerHTML = `<blockquote><p>${details}</p></blockquote><br>`
-    }else{
-        console.log("No details for this mission")
-    }
+    if (data.mission !== null ) document.getElementById("missionDetails").innerHTML = `
+            <blockquote><p>${details}</p></blockquote><br>`
+
 
     getServiceProviderInfo(data.launch_service_provider.id).then(serviceProvider => {
         console.log("serviceProvider: " + serviceProvider);
@@ -128,67 +123,39 @@ function displayRocketInfo(data){
     console.log(data);
 
     document.getElementById("height").innerText = data.length;
-    // document.getElementById("height").innerText = data.height.meters;
-    // document.getElementById("heightFt").innerText = data.height.feet;
-
-    // document.getElementById("diameter").innerText = data.diameter.meters;
     document.getElementById("diameter").innerText = data.diameter;
-    // document.getElementById("diameterFt").innerText = data.diameter.feet;
-
-    // document.getElementById("mass").innerText = data.mass.kg;
     document.getElementById("mass").innerText = data.launch_mass;
-    // document.getElementById("massLb").innerText = data.mass.lb;
 
-    // const engines = document.getElementById("engines");
-    // engines.innerText = data.first_stage.engines;
-
-    const details = document.getElementById("rocketDescription");
-    details.innerHTML = data.description;
+    document.getElementById("rocketDescription").innerHTML = data.description;
 
     document.getElementById("rocketSuccessLaunches").innerText = data.successful_launches;
+
     const rocketWikiLink = document.getElementById("rocketWikiLink")
-    // rocketWikiLink.innerHTML = `<a href="${data.wiki_url}" className="btn btn-circle ms-1" role="button" style="background: rgb(255,255,255);">
-    //     <i className="fab fa-wikipedia-w text-black"></i>
-    // </a>`
     if(data.wiki_url !== "" || data.wiki_url !== null) {
         rocketWikiLink.setAttribute('href', data.wiki_url);
     } else {
         rocketWikiLink.innerHTML = ``;
     }
-    const rocketPic = document.getElementById("rocketPic");
-    rocketPic.src = data.image_url;
 
-    // createTable(data.flights);
+    document.getElementById("rocketPic").src = data.image_url;
 }
 
 function displayPadInfo(data){
     console.log("displayPadInfo: " + data.data)
     console.log("displayPadInfo: " + data)
 
-    const name = document.getElementById("name");
-    name.innerText = data.name;
-
-    const launches = document.getElementById("launches");
-    launches.innerText = data.total_launch_count;
-
-    const region = document.getElementById("region");
-    region.innerText = data.location.name;
+    document.getElementById("name").innerText = data.name;
+    document.getElementById("launches").innerText = data.total_launch_count;
+    document.getElementById("region").innerText = data.location.name;
 
     const wikiLink = document.getElementById("padWikiLink");
-    console.log("data.wiki_url: " + data.wiki_url);
-    let wiki = data.wiki_url;
-
-    if(!wiki) {
+    if(!data.wiki_url) {
         wikiLink.remove();
     } else {
-        console.log("wiki url apparently not empty")
         wikiLink.setAttribute('href', data.wiki_url);
     }
-    // wikiLink.innerHTML = `<a href="${data.wiki_url}" className="btn btn-circle ms-1" role="button" style="background: rgb(255,0,0);"><i
-    //     className="fab fa-youtube text-white"></i></a>`
 
     // Get latitude and longitude from data
-
     console.log("data.latitude = " + data.latitude)
     console.log("data.longitude = " + data.longitude)
 
