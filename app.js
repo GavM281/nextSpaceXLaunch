@@ -74,7 +74,7 @@ function displayLaunchInfo(data){
     document.getElementById("missionStatus").innerHTML = `<b>${data.status.description}</b>`;
 
     if (data.mission !== null ) document.getElementById("missionDetails").innerHTML = `
-            <blockquote><p>${details}</p></blockquote><br>`
+            <blockquote><p>${data.mission.description}</p></blockquote><br>`
 
 
     getServiceProviderInfo(data.launch_service_provider.id).then(serviceProvider => {
