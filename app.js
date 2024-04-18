@@ -1,7 +1,7 @@
 const getLaunchInfo = async() =>{
     try{
         // const res = await axios.get('https://api.spacexdata.com/v5/launches/next')
-        // const response = await axios.get('https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=2')
+        // const response = await axios.get('https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=1')
         const response = await axios.get('https://ll.thespacedevs.com/2.2.0/launch/upcoming?hide_recent_previous=true&limit=1')
         console.log(response.data)
         const res = response.data.results[0];
@@ -9,8 +9,16 @@ const getLaunchInfo = async() =>{
         console.log(res)
         displayLaunchInfo(res) // display info, pass in retrieved data
         console.log("Mission Info")
+        // const apiDateString = "2024-04-17T18:30:00Z";
+        // const localDate = new Date(res);
+        //
+        // console.log("Local Time:", localDate);
+        // console.log("Local Time:", localDate.toLocaleString());
+        // console.log("Time:", localDate.toLocaleTimeString());
+        // console.log("Time:", localDate.toLocaleDateString());
+        // console.log("Time with possible zone abbreviation:", localDate.toString());
 
-        countDown(res.window_start); // Countdown to next launch
+        countDown(res.net); // Countdown to next launch
 
         const rocketInfo = await getRocketInfo(res.rocket.configuration.id) // pass in rocket id
         console.log("Rocket Info")
@@ -32,17 +40,23 @@ function displayLaunchInfo(data){
     if(data.agency_launch_attempt_count !== null) document.getElementById("number").innerHTML =
         data.agency_launch_attempt_count + " (" + data.agency_launch_attempt_count_year + " this year)";
 
-    if(data.name !== null) document.getElementById("mission-name").innerHTML = data.name;
+    if(data.name !== null) document.getElementById("mission-name").innerHTML = data.name.split("|")[1];
 
-    if(data.window_start!==null) document.getElementById("date").innerHTML = data.window_start.substring(0,10); // Get date of launch
-
-    const time = document.getElementById("time");
-    if(data.window_start === data.window_end){ // Has exact launch time
-        time.innerHTML = data.window_start.substring(11,19) + " UTC"; // Only show exact time
-        document.getElementById("LaunchWindowText").innerText = "Launch Time"; // Change Launch Window text to Launch time
-    }else{
-        time.innerHTML = data.window_start.substring(11,19) + ' - ' + data.window_end.substring(11,19) + " UTC"; // Show launch window times
-    }
+    if(data.net!==null)
+    {
+        const localDate = new Date(data.net);
+        document.getElementById("date").innerHTML = localDate.toLocaleDateString();
+        document.getElementById("time").innerHTML = localDate.toLocaleTimeString();
+    } // Get date of launch
+    //
+    // const time = document.getElementById("time");
+    // if(data.window_start === data.window_end){ // Has exact launch time
+    //     time.innerHTML = data.window_start.substring(11,19) + " UTC"; // Only show exact time
+    //     document.getElementById("LaunchWindowText").innerText = "Launch Time"; // Change Launch Window text to Launch time
+    // }else{
+    //     time.innerHTML = data.window_start.substring(11,19) + ' - ' + data.window_end.substring(11,19) + " UTC"; // Show launch window times
+    // }
+    // time.innerHTML = data.net.substring(11,19) + " UTC";
 
     // If there's a YouTube stream available show it on page
     if(data.webcast_live === true) {
@@ -71,7 +85,7 @@ function displayLaunchInfo(data){
         console.log("No livestream link available yet")
     }
 
-    document.getElementById("missionStatus").innerHTML = `<b>${data.status.description}</b>`;
+    document.getElementById("missionStatus").innerHTML = `<i><h6>${data.net_precision.description}</h6></i>`;
 
     if (data.mission !== null ) document.getElementById("missionDetails").innerHTML = `
             <blockquote><p>${data.mission.description}</p></blockquote><br>`
@@ -109,8 +123,8 @@ const getServiceProviderInfo = async(id) =>{
 const getRocketInfo = async(id) =>{
     try{
         // const res = await axios.get('https://api.spacexdata.com/v4/rockets/' + id)
-        // const res = await axios.get('https://lldev.thespacedevs.com/2.2.0/config/launcher/' + id)
-        const res = await axios.get('https://ll.thespacedevs.com/2.2.0/config/launcher/' + id)
+        const res = await axios.get('https://lldev.thespacedevs.com/2.2.0/config/launcher/' + id)
+        // const res = await axios.get('https://ll.thespacedevs.com/2.2.0/config/launcher/' + id)
         return (res.data) // Return data
     }catch(e){
         console.log("error: " + e)
@@ -189,49 +203,31 @@ const getPastLaunch = async(id) =>{
 // Based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_countdown
 // Countdown to the launch time
 const countDown = (windowStart) => {
-    // multiply by 1000 to get milliseconds since Unix Epoch
-    let countDownDate = new Date(windowStart).getTime();
+    // Convert to local time
+    const localDate = new Date(windowStart);
 
-    // Get today's date and time
-    let now = Date.now();
+    // Get the time since Unix epoch in milliseconds
+    const timeSinceEpoch = localDate.getTime();
 
-    // Find the distance between now and the count down date
-    let distance = countDownDate - now;
+    setInterval(() => {
+        // Get today's date and time
+        let now = new Date().getTime();
 
-    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Find the distance between now and the count down date
+        let distance = timeSinceEpoch - now;
 
-    if(seconds > 0) { // If launch is in the future
-        setInterval(() => {
-            // Get today's date and time
-            let now = new Date().getTime();
+        // Time calculations for days, hours, minutes and seconds
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Find the distance between now and the count down date
-            let distance = countDownDate - now;
-
-            // Time calculations for days, hours, minutes and seconds
-            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Set values of countdown
-            document.getElementById('days').innerHTML = days;
-            document.getElementById('minutes').innerHTML = minutes;
-            document.getElementById('hours').innerHTML = hours;
-            document.getElementById('seconds').innerHTML = seconds;
-        }, 1000); // Update every second
-    } else { // Showing last launch
-        document.getElementById('warning').innerHTML =
-            `<div class="alert alert-danger roundCorners" role="alert">
-                No data for next launch found. Showing previous launch.
-            </div>`;
-
-        // Set timer to be 00
-        document.getElementById('days').innerHTML = "00";
-        document.getElementById('minutes').innerHTML = "00";
-        document.getElementById('hours').innerHTML = "00";
-        document.getElementById('seconds').innerHTML = "00";
-    }
+        // Set values of countdown
+        document.getElementById('days').innerHTML = days;
+        document.getElementById('minutes').innerHTML = minutes;
+        document.getElementById('hours').innerHTML = hours;
+        document.getElementById('seconds').innerHTML = seconds;
+    }, 1000); // Update every second
 };
 
 
